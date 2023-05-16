@@ -74,7 +74,7 @@ class RequestStore {
   void unset(String key) => _data.remove(key);
 }
 
-/// Used within [Alfred] to remove request-related data after
+/// Used within [RebornApp] to remove request-related data after
 /// the request has been resolved.
 void storePluginOnDoneHandler(HttpRequest req, HttpResponse res) {
   storePluginData.remove(req);

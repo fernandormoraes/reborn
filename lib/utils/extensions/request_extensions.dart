@@ -55,7 +55,7 @@ extension RequestHelpers on HttpRequest {
   ///
   dynamic get exception => store.tryGet<dynamic>('_internal_exception');
 
-  /// Get Alfred instance which is associated with this request
+  /// Get [RebornApp] instance which is associated with this request
   ///
-  RebornApp get alfred => store.get<RebornApp>('_internal_alfred');
+  RebornApp get app => store.get<RebornApp>('_internal_alfred');
 }
