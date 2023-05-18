@@ -10,6 +10,7 @@ class HttpRoute {
   final List<Method> methods;
   final List<String> routes;
   final FutureOr Function(HttpRequest request, HttpResponse response) handler;
+  final List<FutureOr Function(HttpRequest req, HttpResponse res)> middlewares;
 
   // The RegExp used to match the input URI
   late final List<RegExp> listMatchers = [];
@@ -19,7 +20,10 @@ class HttpRoute {
   Iterable<HttpRouteParam> get params => _params.values;
 
   HttpRoute(
-      {required this.routes, required this.handler, required this.methods}) {
+      {required this.routes,
+      required this.handler,
+      required this.methods,
+      this.middlewares = const []}) {
     // Split route path into segments
 
     /// Because in dart 2.18 uri parsing is more permissive, using a \ in regex

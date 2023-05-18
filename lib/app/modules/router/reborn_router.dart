@@ -157,6 +157,17 @@ class RebornApp with Router {
             break;
           }
 
+          /// Loop through any middleware
+          for (var middleware in match.route.middlewares) {
+            // If the request has already completed, exit early.
+            if (isDone) {
+              break;
+            }
+
+            await _handleResponse(
+                await middleware(request, request.response), request);
+          }
+
           /// If the request has already completed, exit early, otherwise process
           /// the primary route callback
           if (isDone) {
