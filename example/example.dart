@@ -7,6 +7,8 @@ import 'package:reborn/utils/extensions/request_extensions.dart';
 void main() async {
   final app = RebornApp(pathPrefix: 'api/v1');
 
+  app.injector.add<ExternalDependency>(Dependency.new);
+
   app.request(['test', 'abelha'], (req, res) => 'Teste',
       supportedMethods: [Method.get, Method.post]);
 
@@ -16,7 +18,21 @@ void main() async {
     return jsonEncode(Test(1, 'test', body != null).toJson());
   }, supportedMethods: [Method.post]);
 
-  await app.listen(port: 7070, bindIp: '127.0.0.1');
+  app.request(
+      ['sum'], (req, res) => app.injector.get<ExternalDependency>().sum(2, 2));
+
+  await app.listen(port: 7071, bindIp: '127.0.0.1');
+}
+
+abstract class ExternalDependency {
+  int sum(int a, int b);
+}
+
+class Dependency implements ExternalDependency {
+  @override
+  int sum(int a, int b) {
+    return a + b;
+  }
 }
 
 class Test {

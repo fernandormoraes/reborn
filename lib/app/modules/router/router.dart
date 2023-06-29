@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:auto_injector/auto_injector.dart';
 import 'package:meta/meta.dart';
 import 'package:reborn/app/modules/router/reborn_router.dart';
 
@@ -11,6 +12,8 @@ import 'http_route.dart';
 mixin Router {
   @visibleForOverriding
   RebornApp get app;
+
+  final AutoInjector injector = AutoInjector();
 
   /// A prefix for all routes path
   ///
@@ -23,7 +26,7 @@ mixin Router {
   ///
   /// A [Function] handler
   ///
-  /// A [List] of supported [Method]'s
+  /// A [List] of supported [Method]'s with default [Method.get]
   HttpRoute request(List<String> paths,
           FutureOr Function(HttpRequest req, HttpResponse res) handler,
           {List<Method> supportedMethods = const [Method.get]}) =>
