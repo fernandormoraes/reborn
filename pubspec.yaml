@@ -12,6 +12,7 @@ dependencies:
   meta: ^1.9.1
   mime_type: ^1.0.0
   mime: ^1.0.4
+  auto_injector: ^1.0.3
 
 dev_dependencies:
   lints: ^2.0.0
