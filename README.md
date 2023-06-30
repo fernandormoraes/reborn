@@ -27,7 +27,6 @@ This library is a work in progress and should not be used in production right no
 ## Todo
 
 - Tests
-- Logging
 - Docs
 - More examples
 
