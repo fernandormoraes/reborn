@@ -20,6 +20,38 @@ Reborn doesn't provide specific methods for http methods, besides that, provides
         await app.listen(port: 7070, bindIp: '127.0.0.1');
     }
 
+### Injector
+
+Reborn uses *auto_injector* package introducing a built-in dependency injector in library.
+
+    void main() async {
+        final app = RebornApp(pathPrefix: 'api/v1');
+
+        app.injector.add<ExternalDependency>(Dependency.new);
+
+        app.injector.commit();
+
+        app.request(
+            ['sum'], (req, res) => app.injector.get<ExternalDependency>().sum(2, 2));
+
+        abstract class ExternalDependency {
+            int sum(int a, int b);
+        }
+
+        class Dependency implements ExternalDependency {
+            @override
+            int sum(int a, int b) {
+                return a + b;
+            }
+        }
+    }
+
+### Logging
+
+It is possible to manipulate *Logger* to achieve different log levels simply reassigning Logger instance.
+
+    app.logger = Logger(level: Level.debug);
+
 ## Status
 
 This library is a work in progress and should not be used in production right now.
