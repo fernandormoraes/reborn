@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:logger/logger.dart';
 import 'package:reborn/app/modules/router/reborn_router.dart';
 import 'package:reborn/enums/methods.dart';
 import 'package:reborn/utils/extensions/request_extensions.dart';
@@ -8,6 +9,8 @@ void main() async {
   final app = RebornApp(pathPrefix: 'api/v1');
 
   app.injector.add<ExternalDependency>(Dependency.new);
+
+  app.injector.commit();
 
   app.request(['test', 'abelha'], (req, res) => 'Teste',
       supportedMethods: [Method.get, Method.post]);
@@ -20,6 +23,8 @@ void main() async {
 
   app.request(
       ['sum'], (req, res) => app.injector.get<ExternalDependency>().sum(2, 2));
+
+  app.logger = Logger(level: Level.debug);
 
   await app.listen(port: 7071, bindIp: '127.0.0.1');
 }
